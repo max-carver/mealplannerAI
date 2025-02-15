@@ -35,15 +35,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
 
-    async signIn({ user }) {
-      const existingUser = await db.user.findUnique({
-        where: { id: user.id },
-      });
+    // async signIn({ user }) {
+    //   const existingUser = await db.user.findUnique({
+    //     where: { id: user.id },
+    //   });
 
-      if (!existingUser || !existingUser.emailVerified) return false;
+    //   if (!existingUser || !existingUser.emailVerified) return false;
 
-      return true;
-    },
+    //   return true;
+    // },
   },
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
