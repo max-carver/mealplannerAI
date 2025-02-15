@@ -12,10 +12,9 @@ export const generatePlanSchema = z.object({
   budget: z.string().optional(),
 });
 
-//  Diet type (vegan, vegetarian, keto, etc.)
-//  Daily calorie goal
-//  Preferred cuisine (Italian, Japanese, Mexican, etc.)
-//  Allergies
-//  Dietary restrictions (gluten-free, lactose-intolerant, etc.)
-//  Snack or no snack
-//  Budget
+export const RegisterSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long" }),
+});
