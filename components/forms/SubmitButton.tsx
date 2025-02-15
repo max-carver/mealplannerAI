@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components//ui/button";
+import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
 const SubmitButton = ({
@@ -17,7 +18,16 @@ const SubmitButton = ({
   isLoading?: boolean;
 }) => {
   return (
-    <Button type="submit" variant={variant} size={size} className={className}>
+    <Button
+      type="submit"
+      variant={variant}
+      size={size}
+      className={cn(
+        className,
+        "active:scale-[0.97] duration-200  transition active:duration-100"
+      )}
+      disabled={isLoading}
+    >
       {isLoading ? (
         <>
           <Loader2 className="size-6 animate-spin" />

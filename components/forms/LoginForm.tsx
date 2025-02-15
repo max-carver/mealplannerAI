@@ -21,7 +21,7 @@ import SubmitButton from "@/components/forms/SubmitButton";
 import FormError from "@/components/forms/FormError";
 import FormSuccess from "@/components/forms/FormSuccess";
 
-const RegisterForm = () => {
+const LoginForm = () => {
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -103,11 +103,11 @@ const RegisterForm = () => {
         <FormSuccess text={success} />
 
         <SubmitButton isLoading={form.formState.isSubmitting}>
-          Create Account
+          Login
         </SubmitButton>
       </form>
     </Form>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;
