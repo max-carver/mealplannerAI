@@ -3,7 +3,7 @@ import LoginForm from "@/components/forms/LoginForm";
 
 const LoginPage = () => {
   return (
-    <Container>
+    <Container className="flex items-center justify-center h-screen">
       <LoginForm />
     </Container>
   );

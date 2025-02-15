@@ -10,12 +10,14 @@ const SubmitButton = ({
   children,
   className,
   isLoading,
+  onClick,
 }: {
   variant?: "default" | "outline" | "secondary" | "ghost" | "link";
   size?: "default" | "sm" | "lg" | "icon";
   children: React.ReactNode;
   className?: string;
   isLoading?: boolean;
+  onClick?: () => void;
 }) => {
   return (
     <Button
@@ -27,6 +29,7 @@ const SubmitButton = ({
         "active:scale-[0.97] duration-200  transition active:duration-100"
       )}
       disabled={isLoading}
+      onClick={onClick}
     >
       {isLoading ? (
         <>

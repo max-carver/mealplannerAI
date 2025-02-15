@@ -1,6 +1,5 @@
 "use client";
 
-import { RegisterSchema } from "@/lib/formSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -20,30 +19,30 @@ import registerUser from "@/actions/registerUser";
 import SubmitButton from "@/components/forms/SubmitButton";
 import FormError from "@/components/forms/FormError";
 import FormSuccess from "@/components/forms/FormSuccess";
+import { LoginSchema } from "@/lib/formSchemas";
+import loginUser from "@/actions/loginUser";
 
 const LoginForm = () => {
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
+  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     setError("");
     setSuccess("");
 
     try {
-      const response = await registerUser(values);
+      const response = await loginUser(values);
 
-      if (response.error) {
+      if (response?.error) {
         setError(response.message);
-      } else {
-        setSuccess(response.message);
       }
     } catch (error) {
       console.log(error);
@@ -56,7 +55,7 @@ const LoginForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 p-5 border w-full lg:w-1/2 xl:w-1/3  mx-auto rounded shadow-md"
       >
-        <h2 className="text-2xl font-bold text-center">Create an account</h2>
+        <h2 className="text-2xl font-bold text-center">Welcome Back</h2>
         <FormField
           control={form.control}
           name="email"
