@@ -20,6 +20,9 @@ import registerUser from "@/actions/registerUser";
 import SubmitButton from "@/components/forms/SubmitButton";
 import FormError from "@/components/forms/FormError";
 import FormSuccess from "@/components/forms/FormSuccess";
+import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc";
 
 const RegisterForm = () => {
   const [success, setSuccess] = useState<string>("");
@@ -52,60 +55,92 @@ const RegisterForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 p-5 border w-full lg:w-1/2 xl:w-1/3  mx-auto rounded shadow-md"
-      >
-        <h2 className="text-2xl font-bold text-center">Create an account</h2>
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="j.wick@gmail.com" {...field} type="email" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <div className="relative">
+      <div className="space-y-4 p-5 border w-full lg:w-1/2 xl:w-1/3 mx-auto rounded shadow-md">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
+          <h2 className="text-2xl font-bold text-center">Create an account</h2>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
                   <Input
-                    placeholder="At least 8 characters"
+                    placeholder="j.wick@gmail.com"
                     {...field}
-                    type={showPassword ? "text" : "password"}
+                    type="email"
                   />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-2 top-1/2 -translate-y-1/2"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {!showPassword ? <Eye /> : <EyeOff />}
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      placeholder="At least 8 characters"
+                      {...field}
+                      type={showPassword ? "text" : "password"}
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-2 top-1/2 -translate-y-1/2"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {!showPassword ? <Eye /> : <EyeOff />}
+                    </Button>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormError text={error} />
-        <FormSuccess text={success} />
+          <FormError text={error} />
+          <FormSuccess text={success} />
 
-        <SubmitButton isLoading={form.formState.isSubmitting}>
-          Create Account
-        </SubmitButton>
-      </form>
+          <SubmitButton isLoading={form.formState.isSubmitting}>
+            Create Account
+          </SubmitButton>
+        </form>
+
+        <div className="flex items-center justify-center">
+          <Link
+            href="/auth/login"
+            className="hover:underline underline-offset-1 text-sm text-muted-foreground text-center align-center"
+          >
+            Already have an account?
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-center gap-2">
+          <div className="w-full h-[1px] bg-gray-300"></div>
+          <div className="text-gray-500">or</div>
+          <div className="w-full h-[1px] bg-gray-300"></div>
+        </div>
+
+        <div className="flex items-center justify-center gap-2">
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: "/dashboard",
+              })
+            }
+          >
+            <FcGoogle /> Register with Google
+          </Button>
+        </div>
+      </div>
     </Form>
   );
 };

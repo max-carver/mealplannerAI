@@ -8,6 +8,10 @@ import { db } from "@/prisma/db";
 const prisma = new PrismaClient();
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error",
+  },
   events: {
     linkAccount: async ({ user }) => {
       await db.user.update({

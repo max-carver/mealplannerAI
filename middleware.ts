@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 
-const authRoutes = ["/login", "/register", "/reset-password", "/api/auth"];
+const authRoutes = ["/auth/*", "/api/auth"];
 const protectedRoutes = ["/dashboard", "/profile", "/settings"];
 
 export const { auth } = NextAuth(authConfig);
@@ -19,7 +19,7 @@ export default auth((req) => {
   );
 
   if (!isLoggedIn && isProtectedRoute) {
-    return Response.redirect(new URL("/login", req.url));
+    return Response.redirect(new URL("/auth/login", req.url));
   }
 
   if (isLoggedIn && isAuthRoute) {

@@ -23,6 +23,7 @@ import { LoginSchema } from "@/lib/formSchemas";
 import loginUser from "@/actions/loginUser";
 import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 const LoginForm = () => {
   const [success, setSuccess] = useState<string>("");
@@ -107,6 +108,15 @@ const LoginForm = () => {
             Login
           </SubmitButton>
         </form>
+
+        <div className="flex items-center justify-center">
+          <Link
+            href="/auth/register"
+            className="hover:underline underline-offset-1 text-sm text-muted-foreground text-center align-center"
+          >
+            Don't have an account?
+          </Link>
+        </div>
 
         <div className="flex items-center justify-center gap-2">
           <div className="w-full h-[1px] bg-gray-300"></div>
