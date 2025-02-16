@@ -25,6 +25,8 @@ import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 
+import { useSearchParams } from "next/navigation";
+
 const LoginForm = () => {
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -36,6 +38,12 @@ const LoginForm = () => {
       password: "",
     },
   });
+
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Invalid login method"
+      : "";
 
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     setError("");
@@ -102,7 +110,7 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-          <FormError text={error} />
+          <FormError text={error || urlError} />
           <FormSuccess text={success} />
           <SubmitButton isLoading={form.formState.isSubmitting}>
             Login

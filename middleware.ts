@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 
-const authRoutes = ["/auth/*", "/api/auth"];
+const authRoutes = ["/auth/login", "/auth/register", "/api/auth"];
 const protectedRoutes = ["/dashboard", "/profile", "/settings"];
 
 export const { auth } = NextAuth(authConfig);

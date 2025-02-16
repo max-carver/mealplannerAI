@@ -42,6 +42,7 @@ export default async function loginUser(values: z.infer<typeof LoginSchema>) {
         return { error: true, message: "Invalid credentials" };
       }
     }
-    return { error: true, message: "Something went wrong" };
+    console.log(error);
+    throw error;
   }
 }
