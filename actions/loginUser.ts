@@ -19,6 +19,13 @@ export default async function loginUser(values: z.infer<typeof LoginSchema>) {
     where: { email },
   });
 
+  if (existingUser && !existingUser.password) {
+    return {
+      error: true,
+      message: "Invalid login method.",
+    };
+  }
+
   // if (!existingUser?.emailVerified) {
   //   return { error: true, message: "Email not verified" };
   // }
@@ -30,11 +37,11 @@ export default async function loginUser(values: z.infer<typeof LoginSchema>) {
       redirectTo: "/dashboard",
     });
   } catch (error) {
-    if (error instanceof AuthError && error.type === "CredentialsSignin") {
-      return { error: true, message: "Invalid credentials" };
-    } else {
-      return { error: true, message: "Something went wrong" };
+    if (error instanceof AuthError) {
+      if (error.type === "CredentialsSignin") {
+        return { error: true, message: "Invalid credentials" };
+      }
     }
-    throw error;
+    return { error: true, message: "Something went wrong" };
   }
 }

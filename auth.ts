@@ -35,15 +35,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
 
-    // async signIn({ user }) {
-    //   const existingUser = await db.user.findUnique({
-    //     where: { id: user.id },
-    //   });
-
-    //   if (!existingUser || !existingUser.emailVerified) return false;
-
-    //   return true;
-    // },
+    async signIn({ user }) {
+      // @ts-ignore - we added the error property
+      if (user.error === "credentials_account_exists") {
+        return `/auth/error?error=${encodeURIComponent(
+          "Invalid login method."
+        )}`;
+      }
+      return true;
+    },
+  },
+  pages: {
+    error: "/auth/error",
   },
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },

@@ -26,7 +26,7 @@ const SubmitButton = ({
       size={size}
       className={cn(
         className,
-        "active:scale-[0.97] duration-200  transition active:duration-100"
+        "active:scale-[0.97] duration-200  transition active:duration-100 w-full"
       )}
       disabled={isLoading}
       onClick={onClick}
