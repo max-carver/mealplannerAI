@@ -10,23 +10,6 @@ export default {
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      async profile(profile) {
-        const existingUser = await db.user.findUnique({
-          where: { email: profile.email },
-        });
-
-        if (existingUser?.password) {
-          return {
-            id: profile.sub,
-            name: profile.name,
-            email: profile.email,
-            image: profile.picture,
-            error: "credentials_account_exists",
-          };
-        }
-
-        return profile;
-      },
     }),
     Credentials({
       async authorize(credentials) {

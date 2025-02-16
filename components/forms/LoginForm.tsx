@@ -51,16 +51,6 @@ const LoginForm = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      await signIn("google", {
-        callbackUrl: "/dashboard",
-      });
-    } catch (error) {
-      setError("Unable to sign in with Google. Please try again.");
-    }
-  };
-
   return (
     <Form {...form}>
       <div className="space-y-4 p-5 border w-full lg:w-1/2 xl:w-1/3 mx-auto rounded shadow-md">
@@ -128,7 +118,11 @@ const LoginForm = () => {
           <Button
             variant="outline"
             className="w-full"
-            onClick={handleGoogleSignIn}
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: "/dashboard",
+              })
+            }
           >
             <FcGoogle /> Login with Google
           </Button>
