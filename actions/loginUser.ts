@@ -2,6 +2,7 @@
 
 import { signIn } from "@/auth";
 import { LoginSchema } from "@/lib/formSchemas";
+import { sendVerificationEmail } from "@/lib/mail";
 import { generateVerificationToken } from "@/lib/tokens";
 import { db } from "@/prisma/db";
 import { AuthError } from "next-auth";
@@ -37,6 +38,11 @@ export default async function loginUser(values: z.infer<typeof LoginSchema>) {
   if (!existingUser.emailVerified) {
     const verificationToken = await generateVerificationToken(
       existingUser.email
+    );
+
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token
     );
 
     return {
