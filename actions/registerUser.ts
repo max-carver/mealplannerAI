@@ -1,6 +1,7 @@
 "use server";
 
 import { RegisterSchema } from "@/lib/formSchemas";
+import { generateVerificationToken } from "@/lib/tokens";
 import { db } from "@/prisma/db";
 import bcryptjs from "bcryptjs";
 import * as z from "zod";
@@ -36,7 +37,9 @@ export default async function registerUser(
       },
     });
 
-    return { error: false, message: "User created successfully" };
+    const verificationToken = await generateVerificationToken(email);
+
+    return { error: false, message: "Verification email sent!" };
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);

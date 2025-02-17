@@ -2,6 +2,7 @@
 
 import { signIn } from "@/auth";
 import { LoginSchema } from "@/lib/formSchemas";
+import { generateVerificationToken } from "@/lib/tokens";
 import { db } from "@/prisma/db";
 import { AuthError } from "next-auth";
 import * as z from "zod";
@@ -26,9 +27,23 @@ export default async function loginUser(values: z.infer<typeof LoginSchema>) {
     };
   }
 
-  // if (!existingUser?.emailVerified) {
-  //   return { error: true, message: "Email not verified" };
-  // }
+  if (!existingUser || !existingUser.email || !existingUser.password) {
+    return {
+      error: true,
+      message: "Invalid credentials",
+    };
+  }
+
+  if (!existingUser.emailVerified) {
+    const verificationToken = await generateVerificationToken(
+      existingUser.email
+    );
+
+    return {
+      error: false,
+      message: "Verification email sent!",
+    };
+  }
 
   try {
     await signIn("credentials", {
@@ -40,6 +55,12 @@ export default async function loginUser(values: z.infer<typeof LoginSchema>) {
     if (error instanceof AuthError) {
       if (error.type === "CredentialsSignin") {
         return { error: true, message: "Invalid credentials" };
+      }
+      if (error.type === "AccessDenied") {
+        return {
+          error: true,
+          message: "Something went wrong",
+        };
       }
     }
     console.log(error);

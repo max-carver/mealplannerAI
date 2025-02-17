@@ -23,6 +23,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   callbacks: {
+    async signIn({ user, account }) {
+      console.log({ account, user });
+      // Allow Google without verification
+      if (account?.provider === "google") return true;
+
+      const existingUser = await db.user.findUnique({
+        where: { id: user.id },
+      });
+
+      // User must be verified to login
+      if (!existingUser?.emailVerified) return false;
+
+      return true;
+    },
+
     async jwt({ token }) {
       if (!token.sub) return token;
 

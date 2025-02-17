@@ -54,6 +54,8 @@ const LoginForm = () => {
 
       if (response?.error) {
         setError(response.message);
+      } else if (response?.error === false) {
+        setSuccess(response.message);
       }
     } catch (error) {
       console.log(error);
