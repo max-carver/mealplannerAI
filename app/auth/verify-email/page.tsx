@@ -1,15 +1,10 @@
 import { Container } from "@/components/container";
+import VerificationForm from "@/components/forms/VerificationForm";
 
-type Params = {
-  token: string;
-};
-
-const VerifyEmailPage = async ({ params }: { params: Params }) => {
-  const { token } = await params;
-
+const VerifyEmailPage = async () => {
   return (
     <Container className="flex h-screen items-center justify-center">
-      Verifiy Email Page
+      <VerificationForm />
     </Container>
   );
 };
