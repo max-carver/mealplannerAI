@@ -1,8 +1,15 @@
 import { auth } from "@/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { db } from "@/prisma/db";
 
 export default async function DashboardPage() {
   const session = await auth();
+
+  const mealPlans = await db.mealPlan.findMany({
+    where: {
+      userId: session?.user?.id,
+    },
+  });
 
   return (
     <div className="space-y-8">
@@ -19,9 +26,17 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             {/* Add your meal plans list component here */}
-            <p className="text-sm text-muted-foreground">
-              You haven't created any meal plans yet.
-            </p>
+            {mealPlans.length > 0 ? (
+              <div className="flex flex-col gap-4">
+                {mealPlans.map((mealPlan) => (
+                  <div key={mealPlan.id}>{mealPlan.id}</div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                You haven't created any meal plans yet.
+              </p>
+            )}
           </CardContent>
         </Card>
 

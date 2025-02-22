@@ -112,8 +112,10 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
+
           <FormError text={error || urlError} />
           <FormSuccess text={success} />
+
           <SubmitButton isLoading={form.formState.isSubmitting}>
             Login
           </SubmitButton>

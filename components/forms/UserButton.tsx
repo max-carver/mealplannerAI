@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   Settings,
   LogOut,
+  Plus,
 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
@@ -52,6 +53,13 @@ const UserButton = () => {
             </p>
           </div>
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <Plus className="mr-2 size-4" />
+            Generate Plan
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link href="/dashboard">

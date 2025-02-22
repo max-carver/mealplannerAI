@@ -17,14 +17,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { CustomSelect } from "./CustomSelect";
 import { MultiSelect } from "../CustomMultiSelect";
-
+import generateMealPlan from "@/actions/generateMealPlan";
+import SubmitButton from "./SubmitButton";
+import FormError from "./FormError";
+import FormSuccess from "./FormSuccess";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 const GeneratePlanForm = () => {
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof generatePlanSchema>>({
     resolver: zodResolver(generatePlanSchema),
     defaultValues: {
       dailyCalorieGoal: "",
-      dietType: "",
-      preferredCuisine: "",
+      dietType: "none",
+      preferredCuisine: "none",
       allergies: "",
       dietaryRestrictions: [],
       budget: "",
@@ -32,6 +41,7 @@ const GeneratePlanForm = () => {
   });
 
   const dietTypeOptions = [
+    { key: "none", label: "Select diet type" },
     { key: "halaal", label: "Halaal" },
     { key: "kosher", label: "Kosher" },
     { key: "vegetarian", label: "Vegetarian" },
@@ -41,6 +51,7 @@ const GeneratePlanForm = () => {
   ];
 
   const preferredCuisineOptions = [
+    { key: "none", label: "Select cuisine" },
     { key: "italian", label: "Italian" },
     { key: "japanese", label: "Japanese" },
     { key: "mexican", label: "Mexican" },
@@ -52,12 +63,26 @@ const GeneratePlanForm = () => {
   ];
 
   const dietaryRestrictionsOptions = [
+    { key: "none", label: "Select restrictions" },
     { key: "gluten-free", label: "Gluten-Free" },
     { key: "lactose-intolerant", label: "Lactose-Intolerant" },
   ];
 
-  const onSubmit = (values: z.infer<typeof generatePlanSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof generatePlanSchema>) => {
+    try {
+      const response = await generateMealPlan(values);
+      if (response.error) {
+        setError(response.message);
+      } else {
+        setSuccess(response.message);
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      setError("Something went wrong");
+      console.log(error);
+    } finally {
+      form.reset();
+    }
   };
 
   return (
@@ -70,7 +95,7 @@ const GeneratePlanForm = () => {
             <FormItem>
               <FormLabel className="text-primary">Daily Calorie Goal</FormLabel>
               <FormControl>
-                <Input placeholder="2000" {...field} />
+                <Input placeholder="2000" {...field} required />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -169,10 +194,13 @@ const GeneratePlanForm = () => {
           )}
         />
 
+        <FormError text={error} />
+        <FormSuccess text={success} />
+
         <div>
-          <Button type="submit" className="w-full mt-2">
+          <SubmitButton isLoading={form.formState.isSubmitting}>
             Generate Plan
-          </Button>
+          </SubmitButton>
         </div>
       </form>
     </Form>
