@@ -55,9 +55,9 @@ const RegisterForm = () => {
 
   return (
     <Form {...form}>
-      <div className="space-y-4 p-5 border w-full lg:w-1/2 xl:w-1/3 mx-auto rounded shadow-md">
+      <div className="form">
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
-          <h2 className="text-2xl font-bold text-center">Create an account</h2>
+          <h2 className="text-4xl font-bold text-center">Create an account</h2>
           <FormField
             control={form.control}
             name="email"
@@ -108,7 +108,7 @@ const RegisterForm = () => {
           <FormSuccess text={success} />
 
           <SubmitButton isLoading={form.formState.isSubmitting}>
-            Create Account
+            Get Started
           </SubmitButton>
         </form>
 

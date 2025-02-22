@@ -15,7 +15,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import registerUser from "@/actions/registerUser";
 import SubmitButton from "@/components/forms/SubmitButton";
 import FormError from "@/components/forms/FormError";
 import FormSuccess from "@/components/forms/FormSuccess";
@@ -31,6 +30,7 @@ const LoginForm = () => {
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -64,9 +64,9 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <div className="space-y-4 p-5 border w-full lg:w-1/2 xl:w-1/3 mx-auto rounded shadow-md">
+      <div className="form">
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <h2 className="text-2xl font-bold text-center">Welcome Back</h2>
+          <h2 className="text-4xl font-bold text-center">Welcome Back</h2>
           <FormField
             control={form.control}
             name="email"

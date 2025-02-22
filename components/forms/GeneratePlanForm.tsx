@@ -62,10 +62,7 @@ const GeneratePlanForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 p-5 border w-full lg:w-1/2 xl:w-1/3  mx-auto rounded shadow-md"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="form">
         <FormField
           control={form.control}
           name="dailyCalorieGoal"

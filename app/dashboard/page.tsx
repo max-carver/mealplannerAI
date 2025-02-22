@@ -1,17 +1,42 @@
-import logoutUser from "@/actions/logoutUser";
 import { auth } from "@/auth";
-import { Container } from "@/components/container";
-import SubmitButton from "@/components/forms/SubmitButton";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const DashboardPage = async () => {
+export default async function DashboardPage() {
   const session = await auth();
 
   return (
-    <Container>
-      {JSON.stringify(session)}{" "}
-      <SubmitButton onClick={logoutUser}>Logout</SubmitButton>
-    </Container>
-  );
-};
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold">
+          Welcome back, {session?.user?.name?.split(" ")[0]}!
+        </h1>
+      </div>
 
-export default DashboardPage;
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+        <Card className="col-span-4">
+          <CardHeader>
+            <CardTitle>Recent Meal Plans</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {/* Add your meal plans list component here */}
+            <p className="text-sm text-muted-foreground">
+              You haven't created any meal plans yet.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="col-span-3">
+          <CardHeader>
+            <CardTitle>Upcoming Shopping</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {/* Add your shopping list component here */}
+            <p className="text-sm text-muted-foreground">
+              No upcoming shopping lists.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}

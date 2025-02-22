@@ -42,9 +42,9 @@ const VerificationForm = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-4 p-5 border w-full lg:w-1/2 xl:w-1/3 mx-auto rounded shadow-md flex flex-col items-center justify-center"
+      className="form flex flex-col items-center justify-center"
     >
-      {error && success && (
+      {!error && !success && (
         <p className="text-2xl font-bold">Verifying Email...</p>
       )}
       {error && <FormError text={error} />}
