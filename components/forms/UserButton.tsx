@@ -55,10 +55,12 @@ const UserButton = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Plus className="mr-2 size-4" />
-            Generate Plan
-          </DropdownMenuItem>
+          <Link href="/generate-meal-plan">
+            <DropdownMenuItem>
+              <Plus className="mr-2 size-4" />
+              Generate Plan
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

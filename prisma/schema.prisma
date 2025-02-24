@@ -81,5 +81,6 @@ model MealPlan {
   allergies String
   dietaryRestrictions String[]
   budget Int
+  description String
 }
  

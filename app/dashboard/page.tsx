@@ -29,7 +29,7 @@ export default async function DashboardPage() {
             {mealPlans.length > 0 ? (
               <div className="flex flex-col gap-4">
                 {mealPlans.map((mealPlan) => (
-                  <div key={mealPlan.id}>{mealPlan.id}</div>
+                  <div key={mealPlan.id}>{mealPlan.description}</div>
                 ))}
               </div>
             ) : (

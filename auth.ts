@@ -24,7 +24,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   callbacks: {
     async signIn({ user, account }) {
-      console.log({ account, user });
       // Allow Google without verification
       if (account?.provider === "google") return true;
 
@@ -53,7 +52,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
 
     async session({ token, session }) {
-      console.log(token);
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
