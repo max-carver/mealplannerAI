@@ -133,7 +133,7 @@ const RegisterForm = () => {
             className="w-full"
             onClick={() =>
               signIn("google", {
-                callbackUrl: "/dashboard",
+                callbackUrl: "/generate-meal-plan",
               })
             }
           >

@@ -75,7 +75,7 @@ const GeneratePlanForm = () => {
         setError(response.message);
       } else {
         setSuccess(response.message);
-        router.push("/dashboard");
+        router.push("/generate-meal-plan");
       }
     } catch (error) {
       setError("Something went wrong");

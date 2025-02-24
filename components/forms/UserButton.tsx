@@ -62,9 +62,9 @@ const UserButton = () => {
             </DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <Link href="/dashboard">
+        {/* <DropdownMenuSeparator /> */}
+        {/* <DropdownMenuGroup>
+          <Link href="/generate-meal-plan">
             <DropdownMenuItem>
               <LayoutDashboard className="mr-2 size-4" />
               Dashboard
@@ -76,10 +76,10 @@ const UserButton = () => {
               Settings
             </DropdownMenuItem>
           </Link>
-        </DropdownMenuGroup>
+        </DropdownMenuGroup> */}
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          className="text-destructive focus:text-destructive-foreground"
+          className="text-destructive focus:text-destructive-foreground focus:bg-destructive/90"
           onClick={() => signOut()}
         >
           <LogOut className="mr-2 size-4" />

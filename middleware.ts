@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 
 const authRoutes = ["/auth/login", "/auth/register", "/api/auth"];
-const protectedRoutes = ["/dashboard", "/settings", "/generate-meal-plan"];
+const protectedRoutes = ["/generate-meal-plan"];
 
 export const { auth } = NextAuth(authConfig);
 
@@ -23,7 +23,7 @@ export default auth((req) => {
   }
 
   if (isLoggedIn && isAuthRoute) {
-    return Response.redirect(new URL("/dashboard", req.url));
+    return Response.redirect(new URL("/generate-meal-plan", req.url));
   }
 });
 

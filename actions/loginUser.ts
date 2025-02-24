@@ -55,7 +55,7 @@ export default async function loginUser(values: z.infer<typeof LoginSchema>) {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: "/dashboard",
+      redirectTo: "/generate-meal-plan",
     });
   } catch (error) {
     if (error instanceof AuthError) {
