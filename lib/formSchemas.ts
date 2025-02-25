@@ -8,8 +8,8 @@ export const generatePlanSchema = z.object({
   preferredCuisine: z.string().optional(),
   allergies: z.string().optional(),
   dietaryRestrictions: z.array(z.string()).optional(),
-  snack: z.boolean().optional(),
   budget: z.string().optional(),
+  snack: z.boolean().default(false).optional(),
 });
 
 export const RegisterSchema = z.object({

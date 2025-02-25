@@ -1,11 +1,10 @@
 import { Container } from "@/components/container";
-import GeneratePlanForm from "@/components/forms/GeneratePlanForm";
-import React from "react";
+import { MealPlanGenerator } from "./MealPlanGenerator";
 
 const GenerateMealPlanPage = () => {
   return (
-    <Container>
-      <GeneratePlanForm />
+    <Container className="flex items-center justify-center h-[calc(100vh-80px)]">
+      <MealPlanGenerator />
     </Container>
   );
 };

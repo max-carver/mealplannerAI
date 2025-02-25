@@ -4,8 +4,8 @@ import * as z from "zod";
 import { generatePlanSchema } from "@/lib/formSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Checkbox } from "@/components/ui/checkbox";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -21,9 +21,14 @@ import generateMealPlan from "@/actions/generateMealPlan";
 import SubmitButton from "./SubmitButton";
 import FormError from "./FormError";
 import FormSuccess from "./FormSuccess";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-const GeneratePlanForm = () => {
+
+const GeneratePlanForm = ({
+  onSubmittingChange,
+}: {
+  onSubmittingChange: (isSubmitting: boolean) => void;
+}) => {
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
   const router = useRouter();
@@ -40,8 +45,13 @@ const GeneratePlanForm = () => {
     },
   });
 
+  // Watch for changes to isSubmitting
+  useEffect(() => {
+    onSubmittingChange(form.formState.isSubmitting);
+  }, [form.formState.isSubmitting, onSubmittingChange]);
+
   const dietTypeOptions = [
-    { key: "none", label: "Select diet type" },
+    { key: "none", label: "None" },
     { key: "halaal", label: "Halaal" },
     { key: "kosher", label: "Kosher" },
     { key: "vegetarian", label: "Vegetarian" },
@@ -51,7 +61,7 @@ const GeneratePlanForm = () => {
   ];
 
   const preferredCuisineOptions = [
-    { key: "none", label: "Select cuisine" },
+    { key: "none", label: "None" },
     { key: "italian", label: "Italian" },
     { key: "japanese", label: "Japanese" },
     { key: "mexican", label: "Mexican" },
@@ -63,20 +73,22 @@ const GeneratePlanForm = () => {
   ];
 
   const dietaryRestrictionsOptions = [
-    { key: "none", label: "Select restrictions" },
+    // { key: "none", label: "Select restrictions" },
     { key: "gluten-free", label: "Gluten-Free" },
     { key: "lactose-intolerant", label: "Lactose-Intolerant" },
   ];
 
   const onSubmit = async (values: z.infer<typeof generatePlanSchema>) => {
     try {
-      const response = await generateMealPlan(values);
-      if (response.error) {
-        setError(response.message);
-      } else {
-        setSuccess(response.message);
-        router.push("/generate-meal-plan");
-      }
+      // const response = await generateMealPlan(values);
+      // if (response.error) {
+      //   setError(response.message);
+      // } else {
+      //   setSuccess(response.message);
+      //   router.push("/generate-meal-plan");
+      // }
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      console.log(values);
     } catch (error) {
       setError("Something went wrong");
       console.log(error);
@@ -87,7 +99,7 @@ const GeneratePlanForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="form">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-4">
         <FormField
           control={form.control}
           name="dailyCalorieGoal"
@@ -95,7 +107,7 @@ const GeneratePlanForm = () => {
             <FormItem>
               <FormLabel className="text-primary">Daily Calorie Goal</FormLabel>
               <FormControl>
-                <Input placeholder="2000" {...field} required />
+                <Input placeholder="Amount of calories" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -147,7 +159,7 @@ const GeneratePlanForm = () => {
               <FormControl>
                 <Input
                   {...field}
-                  placeholder="Nuts, shellfish, soy etc"
+                  placeholder="Leave blank if none"
                   className="w-full"
                 />
               </FormControl>
@@ -187,7 +199,27 @@ const GeneratePlanForm = () => {
             <FormItem>
               <FormLabel className="text-primary">Budget</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="2000" className="w-full" />
+                <Input
+                  {...field}
+                  placeholder="Optional budget amount"
+                  className="w-full"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="snack"
+          render={({ field }) => (
+            <FormItem className="flex-row items-center gap-2">
+              <FormLabel className="text-primary">Include snack</FormLabel>
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
